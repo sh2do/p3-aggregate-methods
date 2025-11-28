@@ -15,6 +15,9 @@ class Student:
     def get_enrollments(self):
         return self._enrollments.copy()
 
+    def course_count(self):
+        return len(self._enrollments)
+
 class Course:
     def __init__(self, title):
 
@@ -45,3 +48,11 @@ class Enrollment:
 
     def get_enrollment_date(self):
         return self._enrollment_date
+
+    @classmethod
+    def aggregate_enrollments_per_day(cls):
+        enrollment_count = {}
+        for enrollment in cls.all:
+            date = enrollment.get_enrollment_date().date()
+            enrollment_count[date] = enrollment_count.get(date, 0) + 1
+        return enrollment_count
